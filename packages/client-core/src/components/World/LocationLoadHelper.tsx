@@ -28,7 +28,10 @@ import { loadEngineInjection } from '@xrengine/projects/loadEngineInjection'
 import { getSystemsFromSceneData } from '@xrengine/projects/loadSystemInjection'
 
 export const retrieveLocationByName = (authState: AuthState, locationName: string) => {
+  console.log('retreiveLocationByName')
+  console.log('authState.isLoggedIn, authState.user.id.value', authState.isLoggedIn.value, authState.user.id.value)
   if (authState.isLoggedIn.value === true && authState.user.id.value) {
+    console.log('User is logged in, okay to get location')
     if (locationName === globalThis.process.env['VITE_LOBBY_LOCATION_NAME']) {
       const history = useHistory()
       LocationService.getLobby()
@@ -37,6 +40,7 @@ export const retrieveLocationByName = (authState: AuthState, locationName: strin
         })
         .catch((err) => console.log('getLobby error', err))
     } else {
+      console.log('calling getLocationByName', locationName)
       LocationService.getLocationByName(locationName)
     }
   }

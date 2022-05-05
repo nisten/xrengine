@@ -99,6 +99,7 @@ export const LocationService = {
     }
   },
   getLocationByName: async (locationName: string) => {
+    console.log('getLocationByName', locationName)
     const dispatch = useDispatch()
     dispatch(LocationAction.fetchingCurrentSocialLocation())
     const locationResult = (await client.service('location').find({

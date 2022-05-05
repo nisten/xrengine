@@ -19,14 +19,20 @@ export const LoadLocationScene = () => {
    * Once we have logged in, retrieve the location data
    */
   useHookEffect(() => {
+    console.log('authState.isLoggedIn or locationState.locationName changed', authState.isLoggedIn, locationState.locationName)
     const selfUser = authState.user
+    console.log('selfUser', selfUser)
     const currentLocation = locationState.currentLocation.location
+    console.log('currentLocation', currentLocation)
 
     const isUserBanned =
       selfUser?.locationBans?.value?.find((ban) => ban.locationId === currentLocation.id.value) != null
+    console.log('isUserBanned', isUserBanned)
     dispatch(LocationAction.socialSelfUserBanned(isUserBanned))
 
+    console.log('isUserBanned, fetchingCurrentLocation, locationName', isUserBanned, locationState.fetchingCurrentLocation, locationState.locationName.value)
     if (!isUserBanned && !locationState.fetchingCurrentLocation.value && locationState.locationName.value) {
+      console.log('Calling retrieveLocationByName')
       retrieveLocationByName(authState, locationState.locationName.value)
     }
   }, [authState.isLoggedIn, locationState.locationName])
